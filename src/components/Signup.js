@@ -1,3 +1,4 @@
+
 // Imports
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -11,41 +12,42 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
 
-const handleName = (e) => {
-    setName(e.target.value)
-}
-const handleEmail = (e) => {
-    setEmail(e.target.value)
-}
-const handlePassword = (e) => {
-    setPassword(e.target.value)
-}
-const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value)
-}
-const handleSubmit = (e) => {
-    e.preventDefault(); // at the beginning at a default function
-    // make sure password and confirmed password are equal
-    //then make sure the passwrod link is >= 8 characters
-    if (password === confirmPassword && password.length >= 8) {
-        const newUser = {name, email, password };
-        axios.post(`${REACT_APP_SERVER_URL}/users/register`, newUser)
-        .then(response => {
-            console.log(' Yay, new user')
-            console.log(response);
-            setRedirect(true);
-        })
-        .catch(error => console.log('===> Error in signup', console.error))
-    } else {
-        if (password !== confirmPassword) alert('Passwords do not match');
-        alert('Password needs to be at least 8 characters. Please try again.');
+    const handleName = (e) => {
+        setName(e.target.value);
     }
-}
 
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    }
 
+    const handlePassword = (e) => {
+        setPassword(e.target.value);
+    }
 
+    const handleConfirmPassword = (e) => {
+        setConfirmPassword(e.target.value);
+    }
 
-    if (redirect) return <Redirect to="/login" />
+    const handleSubmit = (e) => {
+        e.preventDefault(); // at the beginning of a submit function
+        // make sure password and confirm password are equal
+        // password length >= 8 characters
+        if (password === confirmPassword && password.length >= 8) {
+            const newUser = { name, email, password };
+            axios.post(`${REACT_APP_SERVER_URL}/users/register`, newUser)
+            .then(response => {
+                console.log('===> Yay, new user');
+                console.log(response);
+                setRedirect(true);
+            })
+            .catch(error => console.log('===> Error in Signup', error));
+        } else {
+            if (password !== confirmPassword) return alert('Passwords don\'t match');
+            alert('Password needs to be at least 8 characters. Please try again.');
+        }
+    }
+
+    if (redirect) return <Redirect to="/login" /> // You can have them redirected to profile (your choice)
 
     return (
         <div className="row mt-4">
@@ -70,7 +72,6 @@ const handleSubmit = (e) => {
                             <input type="text" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPassword} className="form-control"/>
                         </div>
                         <button type="submit" className="btn btn-primary float-right">Submit</button>
-
                     </form>
                 </div>
             </div>
