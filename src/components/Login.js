@@ -33,7 +33,7 @@ const Login = (props) => {
             // decode token to get the user data
             const decoded = jwt_decode(token);
             // set the current user
-            props.nowCurrentUser(decoded); // funnction passed down as props.
+            props.nowCurrentUser(decoded); // function passed down as props.
         })
         .catch(error => {
             console.log('===> Error on login', error);
@@ -41,7 +41,7 @@ const Login = (props) => {
         });
     }
 
-    props.user ? <Redirect to="/profile" /> : <Redirect to="/login" /> // double check
+    if (props.user) return <Redirect to="/profile" />
 
     return (
         <div className="row mt-4">
